@@ -60,12 +60,13 @@ public class TabButtons extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent me) {
+                boolean runEvent = false;
                 int newSelectedIndex = -1;
                 for (int i = 0; i < buttons.size(); i++) {
                     if (buttons.get(i).getPolygon().contains(me.getPoint())) {
                         buttons.get(i).setSelected(true);
                         newSelectedIndex = i;
-                        runEventOnTab(me);
+                        runEvent = true;
                     }
                 }
                 if (newSelectedIndex != getSelectedIndex() && newSelectedIndex != -1) {
@@ -74,6 +75,9 @@ public class TabButtons extends JComponent {
                     }
                     setSelectedIndex(newSelectedIndex);
                     repaint();
+                }
+                if (runEvent) {
+                    runEventOnTab(me);
                 }
             }
 
